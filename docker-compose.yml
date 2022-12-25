@@ -1,0 +1,12 @@
+version: "3.9"
+networks:
+  db: {}
+services:
+ api:
+  image: brecht404/python-api
+  ports:
+    - "8000:8000"
+  networks:
+    - db
+  depends_on:
+    - database
