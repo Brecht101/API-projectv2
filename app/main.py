@@ -58,6 +58,14 @@ def read_user(id: int = Query(default=None,gt=0,
         raise HTTPException(status_code=404, detail="Invalid ID")
     return db_user
 
+@app.get("/id")
+def read_id(fname: str, lname: str, db: Session = Depends(get_db)):
+    user = crud.find_userid(db, fname=fname, lname=lname)
+    return user
+    
+    
+    
+
 @app.put("/change")
 def change_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=id)
