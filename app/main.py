@@ -63,5 +63,4 @@ def change_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID or password!")
-    db_user.registration_date = datetime.datetime.now()
     return crud.change_user(db=db, user=db_user)
