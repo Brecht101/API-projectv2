@@ -3,6 +3,11 @@ networks:
   db: {}
 services:
  api:
-  image: brecht404/python-api
+  image: brecht404/python-api2
   ports:
     - "8000:8000"
+  volumes:
+    - sqlite_useritems_volume:/code/sqlitedb
+
+volumes:
+  sqlite_useritems_volume:
