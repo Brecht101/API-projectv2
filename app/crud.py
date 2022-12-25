@@ -22,6 +22,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 def change_user(user: schemas.UserCreate, db: Session):
     db_user = models.User(first_name=user.first_name, last_name=user.last_name, password=user.password)
+    db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
