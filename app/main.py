@@ -75,5 +75,5 @@ def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
 
 @app.delete("/remove")
 def remove_user(id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_user(db, user_id=id)
+    db_user = crud.remove_user(db, user_id=id)
     return db_user
