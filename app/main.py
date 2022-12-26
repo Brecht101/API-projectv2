@@ -41,6 +41,25 @@ def get_db():
     finally:
         db.close()
 
+@app.post("/token")
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    #Try to authenticate the user
+    user = auth.authenticate_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    # Add the JWT case sub with the subject(user)
+    access_token = auth.create_access_token(
+        data={"sub": user.email}
+    )
+    #Return the JWT as a bearer token to be placed in the headers
+    return {"access_token": access_token, "token_type": "bearer"}
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
 @app.post("/users/create")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     user.registration_date = datetime.datetime.now()
@@ -80,24 +99,6 @@ def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
 def remove_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.remove_user(db, user_id=id)
     return db_user
-
-@app.post("/token")
-def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    #Try to authenticate the user
-    user = auth.authenticate_user(db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(
-            status_code=401,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    # Add the JWT case sub with the subject(user)
-    access_token = auth.create_access_token(
-        data={"sub": user.email}
-    )
-    #Return the JWT as a bearer token to be placed in the headers
-    return {"access_token": access_token, "token_type": "bearer"}
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @app.post("/token")
