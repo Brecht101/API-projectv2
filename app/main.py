@@ -66,11 +66,12 @@ def read_id(fname: str, lname: str, db: Session = Depends(get_db)):
     return user.id
     
 @app.put("/change")
-def change_user(id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_user(db, user_id=id)
+def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)):
+    user.registration_date = datetime.datetime.now()
+    db_user = crud.change_user(db, user_id=id, user=user)
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID!")
-    return crud.change_user(db=db, user=db_user)
+    return db_user
 
 @app.delete("/remove")
 def remove_user(id: int, db: Session = Depends(get_db)):
