@@ -38,6 +38,5 @@ def remove_user(db: Session, user_id: int):
     db_user = db.query(models.User).filter(models.User.id == user_id).first()
     db.delete(db_user)
     db.commit()
-    db.refresh(db_user)
     return db_user
     
