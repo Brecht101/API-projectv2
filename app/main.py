@@ -67,5 +67,11 @@ def read_id(fname: str, lname: str, db: Session = Depends(get_db)):
 def change_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=id)
     if db_user is None:
-        raise HTTPException(status_code=404, detail="Invalid ID or password!")
+        raise HTTPException(status_code=404, detail="Invalid ID!")
     return crud.change_user(db=db, user=db_user)
+
+@app.delete("/remove")
+def remove_user(id: int, db: Session = Depends(get_db)):
+    db_user = crud.get_user(db, user_id=id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="Invalid ID!")
