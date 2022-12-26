@@ -76,5 +76,4 @@ def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
 @app.delete("/remove")
 def remove_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=id)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="Invalid ID!")
+    return db_user

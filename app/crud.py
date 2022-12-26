@@ -29,8 +29,15 @@ def change_user(db: Session, user_id: int, user: schemas.UserCreate):
     db_user.first_name = user.first_name
     db_user.last_name = user.last_name
     db_user.password = user.password
-    db_user.id = user.id
     db_user.registration_date = user.registration_date
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def remove_user(db: Session, user_id: int):
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    db.delete(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+    
