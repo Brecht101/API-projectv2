@@ -1,4 +1,4 @@
-FROM python:3.10.0
+FROM python:3.10.0-slim
 WORKDIR /code
 EXPOSE 8000
 COPY requirements.txt /code/requirements.txt
