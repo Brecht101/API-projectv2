@@ -63,9 +63,6 @@ def read_id(fname: str, lname: str, db: Session = Depends(get_db)):
     user = crud.find_userid(db, fname=fname, lname=lname)
     return user
     
-    
-    
-
 @app.put("/change")
 def change_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=id)

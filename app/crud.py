@@ -21,7 +21,8 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 def find_userid(db: Session, fname: str, lname: str):
-    return db.query(models.User).filter(models.User.first_name == fname).first() and db.query(models.User).filter(models.User.last_name == lname).first()
+    user = db.query(models.User).filter(models.User.first_name == fname).first() and db.query(models.User).filter(models.User.last_name == lname).first()
+    return user[id]
 
 def change_user(user: schemas.UserCreate, db: Session):
     db_user = models.User(first_name=user.first_name, last_name=user.last_name, password=user.password)
