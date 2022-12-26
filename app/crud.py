@@ -20,9 +20,9 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
-def find_userid(db: Session, fname: str, lname: str):
+def find_user(db: Session, fname: str, lname: str):
     user = db.query(models.User).filter(models.User.first_name == fname).first() and db.query(models.User).filter(models.User.last_name == lname).first()
-    return user.id
+    return user
 
 def change_user(user: schemas.UserCreate, db: Session):
     db_user = models.User(first_name=user.first_name, last_name=user.last_name, password=user.password)

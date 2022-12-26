@@ -60,10 +60,10 @@ def read_user(id: int = Query(default=None,gt=0,
 
 @app.get("/id")
 def read_id(fname: str, lname: str, db: Session = Depends(get_db)):
-    user = crud.find_userid(db, fname=fname, lname=lname)
+    user = crud.find_user(db, fname=fname, lname=lname)
     if user is None:
         raise HTTPException(status_code=404, detail="No user found!")
-    return user
+    return user.id
     
 @app.put("/change")
 def change_user(id: int, db: Session = Depends(get_db)):
