@@ -50,7 +50,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     if not user:
         raise HTTPException(
             status_code=401,
-            detail="Incorrect username or password",
+            detail="Incorrect mail or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     # Add the JWT case sub with the subject(user)
