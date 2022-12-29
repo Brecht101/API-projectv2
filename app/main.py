@@ -76,21 +76,21 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), t
 
 @app.get("/user", response_model=schemas.User)
 def read_user(id: int = Query(default=None,gt=0,
-                             description="This parameter needs the private ID of an account."), db: Session = Depends(get_db)):
+                             description="This parameter needs the private ID of an account."), db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     db_user = crud.get_user(db, user_id=id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID")
     return db_user
 
 @app.get("/id")
-def read_id(fname: str, lname: str, db: Session = Depends(get_db)):
+def read_id(fname: str, lname: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     user = crud.find_user(db, fname=fname, lname=lname)
     if user is None:
         raise HTTPException(status_code=404, detail="No user found!")
     return user.id
     
 @app.put("/change")
-def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)):
+def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     user.registration_date = datetime.datetime.now()
     db_user = crud.change_user(db, user_id=id, user=user)
     if db_user is None:
@@ -101,8 +101,3 @@ def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
 def remove_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.remove_user(db, user_id=id)
     return db_user
-
-@app.get("/users/me", response_model=schemas.User)
-def read_users_me(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
-    current_user = auth.get_current_active_user(db, token)
-    return current_user

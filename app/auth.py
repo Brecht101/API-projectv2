@@ -63,10 +63,3 @@ def get_current_user(db: Session, token: str = Depends(oauth2_scheme)):
     if user is None:
         raise credentials_exception
     return user
-
-
-def get_current_active_user(db: Session, token: str = Depends(oauth2_scheme)):
-    current_user = get_current_user(db, token)
-    if not current_user.is_active:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return current_user
