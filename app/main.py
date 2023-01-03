@@ -23,7 +23,7 @@ origins = [
     "http://localhost:8000",
     "http://localhost",
     "https://brecht101.github.io"
-    "qfqzf"
+    "https://jade-paletas-1d3f7e.netlify.app/"
 ]
 
 app.add_middleware(
