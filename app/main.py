@@ -23,6 +23,7 @@ origins = [
     "http://localhost:8000",
     "http://localhost",
     "https://brecht101.github.io"
+    "qfqzf"
 ]
 
 app.add_middleware(
