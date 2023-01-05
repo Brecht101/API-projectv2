@@ -23,7 +23,7 @@ origins = [
     "http://localhost:8000",
     "http://localhost",
     "https://brecht101.github.io"
-    "https://jade-paletas-1d3f7e.netlify.app/"
+    "https://jade-paletas-1d3f7e.netlify.app"
 ]
 
 app.add_middleware(
@@ -63,10 +63,18 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-@app.post("/users/create")
+@app.post("/users")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     user.registration_date = datetime.datetime.now()
     return crud.create_user(db=db, user=user)
+
+@app.post("/order")
+def create_user(order: schemas.OderCreate, ownerID: int, warehouseID: int, db: Session = Depends(get_db)):
+    return crud.create_order(db=db, order=order, ownerID=ownerID, warehouseID=warehouseID)
+
+@app.post("/warehouse")
+def create_user(warehouse: schemas.WarehouseCreate, db: Session = Depends(get_db)):
+    return crud.create_warehouse(db=db, warehouse=warehouse)
 
 
 @app.get("/users", response_model=list[schemas.User])
@@ -74,6 +82,15 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), t
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
+@app.get("/orders", response_model=list[schemas.Order])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    orders = crud.get_orders(db, skip=skip, limit=limit)
+    return orders
+
+@app.get("/warehouses", response_model=list[schemas.Warehouse])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+    warehouses = crud.get_warehouses(db, skip=skip, limit=limit)
+    return warehouses
 
 @app.get("/user", response_model=schemas.User)
 def read_user(id: int = Query(default=None,gt=0,

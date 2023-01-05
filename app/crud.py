@@ -10,6 +10,11 @@ import auth
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
 
+def get_orders(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Order).offset(skip).limit(limit).all()
+
+def get_warehouses(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Storage).offset(skip).limit(limit).all()
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).offset(skip).limit(limit).all()
@@ -24,6 +29,22 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def create_order(db: Session, order: schemas.OderCreate, ownerID: int, warehouseID: int):
+    db_order = models.Order(**order.dict(), ownerID=ownerID, warehouseID=warehouseID)
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+    return db_order
+
+def create_warehouse(db: Session, warehouse: schemas.WarehouseCreate):
+    db_warehouse = models.Order(warehouseLocation = warehouse.warehouseLocation)
+    db.add(db_warehouse)
+    db.commit()
+    db.refresh(db_warehouse)
+    return db_warehouse
+
 
 def find_user(db: Session, fname: str, lname: str):
     user = db.query(models.User).filter(models.User.first_name == fname).first() and db.query(models.User).filter(models.User.last_name == lname).first()
