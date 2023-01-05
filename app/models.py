@@ -26,6 +26,7 @@ class Order(Base):
     warehouseID = Column(Integer, ForeignKey("warehouses.warehouseID"))
     
     customer = relationship("User", back_populates="order")
+    warehouse = relationship("Storage", back_populates="order")
     
     
 class Storage(Base):
@@ -34,4 +35,4 @@ class Storage(Base):
     warehouseID = Column(Integer, primary_key=True, index=True)
     warehouseLocation = Column(String)
     
-    customer = relationship("User", back_populates="warehouse")
+    oder = relationship("Order", back_populates="warehouse")
