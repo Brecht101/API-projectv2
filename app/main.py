@@ -83,12 +83,12 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):#
     return users
 
 @app.get("/orders", response_model=list[schemas.Order])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):#, token: str = Depends(oauth2_scheme)):
+def read_orders(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):#, token: str = Depends(oauth2_scheme)):
     orders = crud.get_orders(db, skip=skip, limit=limit)
     return orders
 
 @app.get("/warehouses", response_model=list[schemas.Warehouse])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):#, token: str = Depends(oauth2_scheme)):
+def read_warehouses(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):#, token: str = Depends(oauth2_scheme)):
     warehouses = crud.get_warehouses(db, skip=skip, limit=limit)
     return warehouses
 

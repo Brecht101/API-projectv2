@@ -8,7 +8,7 @@ import schemas
 import auth
 
 def get_user(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+    return db.query(models.User).filter(models.User.customerID == user_id).first()
 
 def get_orders(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Order).offset(skip).limit(limit).all()
@@ -51,7 +51,7 @@ def find_user(db: Session, fname: str, lname: str):
     return user
 
 def change_user(db: Session, user_id: int, user: schemas.UserCreate):
-    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    db_user = db.query(models.User).filter(models.User.customerID == user_id).first()
     db_user.first_name = user.first_name
     db_user.last_name = user.last_name
     db_user.email = user.email
@@ -62,7 +62,7 @@ def change_user(db: Session, user_id: int, user: schemas.UserCreate):
     return db_user
 
 def remove_user(db: Session, user_id: int):
-    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    db_user = db.query(models.User).filter(models.User.customerID == user_id).first()
     db.delete(db_user)
     db.commit()
     return db_user
