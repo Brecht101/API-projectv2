@@ -17,7 +17,7 @@ if not os.path.exists('.\sqlitedb'):
 #"sqlite:///./sqlitedb/sqlitedata.db"
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="🔥Brecht Voets 2CCS01's API🔥",description="Welcome to my cool user API, where I made a replica of what could become a login page that stores data in a database!")
+app = FastAPI(title="🔥Brecht Voets 2CCS01's API🔥",description="Welcome to my cool user API, where I made a replica of what could become a webshop secured with oAuth2 and argon2 hashing!")
 
 origins = [
     "http://localhost:8000",
