@@ -32,7 +32,7 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 def create_order(db: Session, order: schemas.OderCreate, ownerID: int, warehouseID: int):
-    db_order = models.Order(**order.dict(), ownerID=ownerID, warehouseID=warehouseID)
+    db_order = models.Order(orderItem = order.orderItem)
     db.add(db_order)
     db.commit()
     db.refresh(db_order)

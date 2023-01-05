@@ -42,8 +42,6 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     customerID: int
-    orders: list[Order] = []
-    warehouses : list[Warehouse] = []
     
     class Config:
         orm_mode = True

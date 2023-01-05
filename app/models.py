@@ -14,19 +14,13 @@ class User(Base):
     registration_date = Column(DateTime)
     customerID = Column(Integer, primary_key=True, index=True)
     
-    order = relationship("Order", back_populates="customer")
-    warehouse = relationship("Storage", back_populates="customer")
 
 class Order(Base):
     __tablename__ = "orders"
     
     orderID = Column(Integer, primary_key=True, index=True)
     orderItem =  Column(String)
-    ownerID = Column(Integer, ForeignKey("customers.customerID"))
-    warehouseID = Column(Integer, ForeignKey("warehouses.warehouseID"))
     
-    customer = relationship("User", back_populates="order")
-    warehouse = relationship("Storage", back_populates="order")
     
     
 class Storage(Base):
@@ -34,5 +28,3 @@ class Storage(Base):
     
     warehouseID = Column(Integer, primary_key=True, index=True)
     warehouseLocation = Column(String)
-    
-    oder = relationship("Order", back_populates="warehouse")
