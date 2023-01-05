@@ -63,7 +63,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-@app.post("/users")
+@app.post("/user")
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     user.registration_date = datetime.datetime.now()
     return crud.create_user(db=db, user=user)
