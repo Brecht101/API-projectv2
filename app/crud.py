@@ -31,7 +31,7 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def create_order(db: Session, order: schemas.OderCreate, ownerID: int, warehouseID: int):
+def create_order(db: Session, order: schemas.OderCreate):
     db_order = models.Order(orderItem = order.orderItem)
     db.add(db_order)
     db.commit()

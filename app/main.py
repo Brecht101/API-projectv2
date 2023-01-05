@@ -69,11 +69,11 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 @app.post("/order")
-def create_user(order: schemas.OderCreate, ownerID: int, warehouseID: int, db: Session = Depends(get_db)):
+def create_order(order: schemas.OderCreate, db: Session = Depends(get_db)):
     return crud.create_order(db=db, order=order, ownerID=ownerID, warehouseID=warehouseID)
 
 @app.post("/warehouse")
-def create_user(warehouse: schemas.WarehouseCreate, db: Session = Depends(get_db)):
+def create_warehouse(warehouse: schemas.WarehouseCreate, db: Session = Depends(get_db)):
     return crud.create_warehouse(db=db, warehouse=warehouse)
 
 
