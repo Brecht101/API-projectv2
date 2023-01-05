@@ -11,8 +11,6 @@ class OderCreate(OrderBase):
 
 class Order(OrderBase):
     orderID: int
-    ownerID: int
-    warehouseID: int
     
     class Config:
         orm_mode = True
