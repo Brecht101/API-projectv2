@@ -39,7 +39,7 @@ def create_order(db: Session, order: schemas.OderCreate):
     return db_order
 
 def create_warehouse(db: Session, warehouse: schemas.WarehouseCreate):
-    db_warehouse = models.Order(warehouseLocation = warehouse.warehouseLocation)
+    db_warehouse = models.Storage(warehouseLocation = warehouse.warehouseLocation)
     db.add(db_warehouse)
     db.commit()
     db.refresh(db_warehouse)

@@ -70,7 +70,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/order")
 def create_order(order: schemas.OderCreate, db: Session = Depends(get_db)):
-    return crud.create_order(db=db, order=order, ownerID=ownerID, warehouseID=warehouseID)
+    return crud.create_order(db=db, order=order)
 
 @app.post("/warehouse")
 def create_warehouse(warehouse: schemas.WarehouseCreate, db: Session = Depends(get_db)):
