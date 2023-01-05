@@ -78,37 +78,37 @@ def create_user(warehouse: schemas.WarehouseCreate, db: Session = Depends(get_db
 
 
 @app.get("/users", response_model=list[schemas.User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
 
 @app.get("/orders", response_model=list[schemas.Order])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     orders = crud.get_orders(db, skip=skip, limit=limit)
     return orders
 
 @app.get("/warehouses", response_model=list[schemas.Warehouse])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     warehouses = crud.get_warehouses(db, skip=skip, limit=limit)
     return warehouses
 
 @app.get("/user", response_model=schemas.User)
 def read_user(id: int = Query(default=None,gt=0,
-                             description="This parameter needs the private ID of an account."), db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+                             description="This parameter needs the private ID of an account."), db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     db_user = crud.get_user(db, user_id=id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID")
     return db_user
 
 @app.get("/id")
-def read_id(fname: str, lname: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def read_id(fname: str, lname: str, db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     user = crud.find_user(db, fname=fname, lname=lname)
     if user is None:
         raise HTTPException(status_code=404, detail="No user found!")
     return user.id
     
 @app.put("/change")
-def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     user.registration_date = datetime.datetime.now()
     db_user = crud.change_user(db, user_id=id, user=user)
     if db_user is None:
@@ -116,6 +116,6 @@ def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
     return db_user
 
 @app.delete("/remove")
-def remove_user(id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def remove_user(id: int, db: Session = Depends(get_db))#, token: str = Depends(oauth2_scheme)):
     db_user = crud.remove_user(db, user_id=id)
     return db_user
