@@ -121,7 +121,7 @@ def remove_user(id: int, password: str, db: Session = Depends(get_db), token: st
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID")
     hashed_password = auth.get_password_hash(password)
-    if db_user.password != hashed_password:
+    if db_user.password != password:
         raise HTTPException(status_code=401, detail="Invalid password!")
     db_user = crud.remove_user(db, user_id=id)
     return db_user
