@@ -99,13 +99,6 @@ def read_user(id: int = Query(default=None,gt=0,
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID")
     return db_user
-
-@app.get("/id")
-def read_id(fname: str, lname: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
-    user = crud.find_user(db, fname=fname, lname=lname)
-    if user is None:
-        raise HTTPException(status_code=404, detail="No user found!")
-    return user.id
     
 @app.put("/change")
 def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):

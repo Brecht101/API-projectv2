@@ -45,11 +45,6 @@ def create_warehouse(db: Session, warehouse: schemas.WarehouseCreate):
     db.refresh(db_warehouse)
     return db_warehouse
 
-
-def find_user(db: Session, fname: str, lname: str):
-    user = db.query(models.User).filter(models.User.first_name == fname).first() and db.query(models.User).filter(models.User.last_name == lname).first()
-    return user
-
 def change_user(db: Session, user_id: int, user: schemas.UserCreate):
     db_user = db.query(models.User).filter(models.User.customerID == user_id).first()
     db_user.first_name = user.first_name
