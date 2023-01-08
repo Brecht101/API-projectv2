@@ -11,3 +11,5 @@ Ook zijn alle passwoorden gehashed opgeslagen!
 API link: https://api-brecht101.cloud.okteto.net
 
 Foto /docs
+![image](https://user-images.githubusercontent.com/91054743/211205841-d411c7ee-44b4-4330-b34d-d0e8e644f2fa.png)
+
