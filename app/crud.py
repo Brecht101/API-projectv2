@@ -1,6 +1,7 @@
 import datetime
 
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
 
 
 import models
@@ -31,8 +32,12 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def create_order(db: Session, order: schemas.OderCreate):
-    db_order = models.Order(orderItem = order.orderItem)
+def create_order(db: Session, order: schemas.OderCreate, customerID: int, warehouseID: int):
+    if db.query(models.User).filter(models.User.customerID == customerID).first() is None:
+        return "Invalid user"
+    if db.query(models.Storage).filter(models.Storage.warehouseID == warehouseID).first() is None:
+        return "Invalid warehouse"
+    db_order =  models.Order(**order.dict(), customerID=customerID, warehouseID=warehouseID)
     db.add(db_order)
     db.commit()
     db.refresh(db_order)
@@ -58,6 +63,9 @@ def change_user(db: Session, user_id: int, user: schemas.UserCreate):
 
 def remove_user(db: Session, user_id: int):
     db_user = db.query(models.User).filter(models.User.customerID == user_id).first()
+    orders = db.query(models.Order).filter(models.Order.customerID == user_id).all()
+    for item in orders:
+        db.delete(item)
     db.delete(db_user)
     db.commit()
     return db_user

@@ -11,6 +11,8 @@ class OderCreate(OrderBase):
 
 class Order(OrderBase):
     orderID: int
+    customerID: int
+    warehouseID: int
     
     class Config:
         orm_mode = True
@@ -40,6 +42,7 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     customerID: int
+    orders: list[Order] = []
     
     class Config:
         orm_mode = True

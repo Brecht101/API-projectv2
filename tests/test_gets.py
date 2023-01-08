@@ -46,7 +46,6 @@ def test_get_orders():
     response_dictionary = response.json()
     for item in response_dictionary:
         assert item is not None
-        assert item is not int
         
 def test_get_warehouses():
     response = requests.get('http://127.0.0.1:8000/warehouses', headers=headerswithtoken)
@@ -54,7 +53,6 @@ def test_get_warehouses():
     response_dictionary = response.json()
     for item in response_dictionary:
         assert item is not None
-        assert item is not int
 
 def test_get_user():
     bad = requests.get('http://127.0.0.1:8000/user?id=ABB', headers=headerswithtoken)

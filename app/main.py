@@ -69,8 +69,8 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 @app.post("/order")
-def create_order(order: schemas.OderCreate, db: Session = Depends(get_db)):
-    return crud.create_order(db=db, order=order)
+def create_order(order: schemas.OderCreate,customerID: int, warehouseID: int, db: Session = Depends(get_db)):
+    return crud.create_order(db=db, order=order, customerID=customerID, warehouseID=warehouseID)
 
 @app.post("/warehouse")
 def create_warehouse(warehouse: schemas.WarehouseCreate, db: Session = Depends(get_db)):
@@ -109,7 +109,7 @@ def change_user(id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
     return db_user
 
 @app.delete("/remove")
-def remove_user(id: int, password: str, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def remove_user(id: int, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
     db_user = crud.get_user(db, user_id=id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="Invalid ID")
